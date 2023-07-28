@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+#include "skills.h"
+
 struct Statblock {
   Statblock(float hp,float atk, float def)
     : m_health(hp), m_attack(atk), m_defense(def){}
@@ -15,8 +17,8 @@ struct Statblock {
 class Character {
 public:
 // writing the actual function for creating the character
-  Character (std::string name, float hp, float atk, float def)
-    : m_name(name), m_stats(hp, atk, def){}    
+  Character (std::string name, Skill skill, float hp, float atk, float def)
+    : m_name(name), m_stats(hp, atk, def), m_skill(skill){}    
   
   friend std::ostream& operator <<(std::ostream& os, const Character& character) {
     os << character.m_name;
@@ -27,6 +29,7 @@ public:
       std::cout << "Health: " << m_stats.m_health << "\n";
       std::cout << "Attack: " << m_stats.m_attack << "\n";
       std::cout << "Defense: " << m_stats.m_defense << "\n";
+	  m_skill.printStats();
     }
 
     std::string getName() const {
@@ -52,4 +55,5 @@ public:
 private:
 	std::string m_name{}; // curly brace initialization
 	Statblock m_stats {}; // struct class in another class, nesting
+	Skill m_skill{};
 };

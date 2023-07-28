@@ -24,18 +24,10 @@ Character getCharacter() {
   using namespace std;
   static vector<Character> Characters
   {
-    {"Fighter", 50, 8, 6}, // static - this is known
-    {"Ranger", 50, 7, 5},
-    {"Cleric", 50, 4, 6},
-    {"Sorcerer", 50, 6, 4}
-  };
-
-  static vector<Skill> Skills
-  {
-    {"Two-Weapon", 4, 6, 0, 0},
-    {"Breaker", 4, 4, 0, 0},
-    {"Intervention", 4, 4, 2, 12},
-    {"Fireball", 4, 12, 0, 0}
+    {"Fighter", {"Two-Weapon", 4, 6, 0, 0}, 50, 8, 6}, // static - this is known
+    {"Ranger", {"Breaker", 4, 4, 0, 0}, 50, 7, 5},
+    {"Cleric", {"Intervention", 4, 4, 2, 12}, 50, 4, 6},
+    {"Sorcerer", {"Fireball", 4, 12, 0, 0}, 50, 6, 4}
   };
 
     std::cout << "Which class interests you most? \n"; // seperation of concerns. pick smallest scope first
@@ -58,7 +50,7 @@ Character getCharacter() {
     }
     std::cout << "The ["<< Characters[choice-1] <<"] has been chosen. \n";
     Characters[choice-1].printStats();
-    Skills[choice-1].printStats();
+
     return Characters[choice-1];
 
     // skill in the character class
