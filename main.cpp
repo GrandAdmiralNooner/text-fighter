@@ -30,6 +30,6 @@ int main()
         compare = mirrorMatch (player.getName(), opponent.getName());
     }
 
-    battle(player.getName(), opponent.getName());
+    battle(player, opponent);
 
 }

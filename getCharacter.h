@@ -14,7 +14,6 @@
 
 #include <vector>
 #include "character.h"
-#include "skills.h"
 
 void printWelcome() {
     std::cout << "Welcome to the Arena!" << '\n';

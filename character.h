@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-
 #include "skills.h"
 
 struct Statblock {
@@ -18,8 +17,8 @@ class Character {
 public:
 // writing the actual function for creating the character
   Character (std::string name, Skill skill, float hp, float atk, float def)
-    : m_name(name), m_stats(hp, atk, def), m_skill(skill){}    
-  
+    : m_name(name), m_skill(skill), m_stats(hp, atk, def) {}    
+    
   friend std::ostream& operator <<(std::ostream& os, const Character& character) {
     os << character.m_name;
     return os;
@@ -29,7 +28,7 @@ public:
       std::cout << "Health: " << m_stats.m_health << "\n";
       std::cout << "Attack: " << m_stats.m_attack << "\n";
       std::cout << "Defense: " << m_stats.m_defense << "\n";
-	  m_skill.printStats();
+	    m_skill.printStats();
     }
 
     std::string getName() const {

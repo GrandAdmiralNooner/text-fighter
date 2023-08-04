@@ -16,6 +16,7 @@ struct Skillblock {
 class Skill
 {
 public:
+    Skill() : m_sname(""), m_skills(0, 0, 0, 0) {}
     Skill (std::string sname,float cd, float add_atk, float add_def, float add_hp)
         : m_sname (sname), m_skills(cd, add_atk, add_def, add_hp){}
 
@@ -26,6 +27,10 @@ friend std::ostream& operator <<(std::ostream& os, const Skill& skills) {
 
 void printStats() const {
     std::cout << "Skill: " << m_sname << '\n';
+}
+
+std::string getSname() const {
+return m_sname;
 }
 
 float getCooldown() const {
@@ -44,4 +49,5 @@ float getAddHP() const {
 private:
     std::string m_sname{};
     Skillblock m_skills{};
+
 };
