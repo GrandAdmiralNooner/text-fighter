@@ -12,84 +12,36 @@
 // if they pick another key, it loops back to the [F] or [R] option
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
-char getRandomAction()
-{
-    return 'A'; // perfectly random
-}
+//function type matters
+// int, char, void, bool - use the right one
+// does it makes sense? default should be void not int
 
-bool battleMenu()
+//new assignment read functions and returns more
+
+//break habits 
+char playerChoice()
 {
-    char fight = ' ';
+    char choice = ' ';
     std::cout << "Battle Menu: [A]ttack - [B]lock - [S]kill \n";
-    std::cin >> fight;
-    switch (fight)
-    {
-    case 'A':
-    case 'a':
-        std::cout << "You have chosen [A]ttack\n";
-        getRandomAction();
-        // logic for opponent action
-        // if op logic is attack
-            //deal damage to both health
-        // if op logic is block
-            // block action gets priority
-            // determine block v attack values
-            // if block > attack = no damage
-            // if block < attack = % - op health
-        // if op logic is skill
-            // pl deals double damage
-            // op uses skill
-    break;
-    case 'B':
-    case 'b':
-        std::cout << "You have chosen [B]lock\n";
-        // block action gets priority
-        // logic for opponent action
-        // if op logic is attack
-            // determine block v attack values
-            // if block > attack = no damage
-            // if block < attack = % - pl health
-        // if op logic is block
-            // no damage
-        // if op logic is skill
-            // op uses skill
-    break;
-    case 'S':
-    case 's':
-        std::cout << "You have chosen [S]kill use\n";
-        // logic for opponent action
-        // if op logic is attack
-            // deal double damage to pl
-        // if op logic is block
-            // no damage
-        // if op logic is skill
-            // op uses skill
-        
-    break;
-    default:
-        return battleMenu();
-    }
-    return false;
-}
-
-bool handleAttack(Character& Health, Character& Attack)
-{
-
-}
-
-bool handleBlock(Character& Defense, Character& Health, Character& Attack)
-{
-
-}
-
-bool handleSkill(Character& Character, Skill& Skill)
-{
+    std::cin >> choice;
     
+    if(choice == 'A' || 'a'){
+        return 'A';
+    }
+    else if(choice == 'B' || 'b'){
+        return 'B';
+    }
+    else if(choice == 'S' || 's'){
+        return 'S';
+    }
+    else
+        return playerChoice();
 }
- 
 
-int battle (Character& Player, Character& Opponent)
+void battle (Character& Player, Character& Opponent) //params - passed in
 {
     char answer = ' ';
     bool inBattle = true;
@@ -103,7 +55,7 @@ int battle (Character& Player, Character& Opponent)
         case 'F':
         case 'f':
             std::cout << "Your battle starts now! \n";
-            battleMenu();
+            playerChoice();
             inBattle = false;
         break;
         case 'R':
@@ -118,26 +70,120 @@ int battle (Character& Player, Character& Opponent)
         }
     }
 
-    while (inBattle)
-    {
-        std::cout << "Choose your action!\n";
-        switch (answer)
-        {
-        case 'A':
-            inBattle = handleAttack(Player, Opponent);
-            break;
-        case 'B':
-            inBattle = handleBlock(x, y, z);
-            break;
-        case 'S':
-            inBattle = handleSkill(Player, Player.getSkill());
-            break;
-        default:
-            std::cout << "That was neither. Try again! \n";
-            break;
+    // while (inBattle)
+    // {
+    //     std::cout << "Choose your action!\n";
+    //     switch (answer)
+    //     {
+    //     case 'A':
+    //         inBattle = handleAttack(Player, Opponent);
+    //         break;
+    //     case 'B':
+    //         inBattle = handleBlock(x, y, z);
+    //         break;
+    //     case 'S':
+    //         inBattle = handleSkill(Player, Player.getSkill());
+    //         break;
+    //     default:
+    //         std::cout << "That was neither. Try again! \n";
+    //         break;
 
-        }
+    //     }
+    // }
+
+}
+
+char getRandomAction()
+{
+    int num = rand() % 3;
+    if (num == 0){
+        return 'A';
+    }
+    else if (num == 1){
+        return 'B';
+    }
+    else
+        return 'S';
+}
+
+bool handleAttack(Character& Health, Character& Attack)
+{
+    switch (getRandomAction())
+    {
+    case 'A':
+        /*
+        player attack - opponent hp
+        opponent attack - player hp
+        */
+    break;
+    case 'B':
+        /*
+        (player atk - opponent def) - opp hp 
+        */
+    break;
+    case 'S':
+        /*
+        player atk*2 - opponent hp
+        opponet skill use
+        */
+    break;
+    default:
+        return true;
+    }
+    return false; //return bool for character death
+}
+
+bool handleBlock(Character& Defense, Character& Health, Character& Attack)
+{
+    switch (getRandomAction())
+    {
+    case 'A':
+        /*
+        (opponent atk - player def) - player hp 
+        */
+    break;
+    case 'B':
+        /*
+        std::cout << "You idiots both blocked. Congrats nothing happens. \n"
+        */
+    break;
+    case 'S':
+        /*
+        (player atk - opponent def) - opp hp 
+        */
+    break;
+    default:
+        return true;
+    }
+    return false; //return bool for character death
     }
 
-    return 0;
+bool handleSkill(Character& Character, Skill& Skill)
+    {
+    switch (getRandomAction())
+    {
+    case 'A':
+        /*
+        opponent atk*2 - player hp
+        player skill use
+        */
+    break;
+    case 'B':
+        /*
+        opponent use block
+        player skill use
+        */
+    break;
+    case 'S':
+        /*
+        player skill use
+        opp skill use
+        */
+    break;
+    default:
+        return true;
+    }
+    return false; //return bool for character death    
 }
+
+
