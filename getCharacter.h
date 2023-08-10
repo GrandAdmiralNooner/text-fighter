@@ -19,6 +19,14 @@ void printWelcome() {
     std::cout << "Welcome to the Arena!" << '\n';
 }
 
+void chooseClass() {
+  std::cout << "You will be choosing your class. \n";
+}
+
+void chooseOpponent() {
+  std::cout << "You will be choosing your opponent. \n";
+}
+
 Character getCharacter() {
   using namespace std;
   static vector<Character> Characters
