@@ -16,11 +16,9 @@ int main()
 {
 
     printWelcome();
-
-    std::cout << "You will be choosing your class. \n";
+    chooseClass();
     Character player = getCharacter();
-
-    std::cout << "You will be choosing your opponent. \n";
+    chooseOpponent();
     Character opponent = getCharacter();
 
     int compare = mirrorMatch (player.getName(), opponent.getName());
