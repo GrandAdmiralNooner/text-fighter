@@ -31,6 +31,14 @@ public:
 	    m_skill.printStats();
     }
 
+     void setSkill(const Skill& skill) {
+        m_skill = skill;
+    }
+
+    const Skill& getSkill() const {
+        return m_skill;
+    }
+
     std::string getName() const {
     return m_name;
     }
@@ -47,8 +55,8 @@ public:
     return m_stats.m_defense;
     }
 
-    void setHealth(float healthChange) {
-      m_stats.m_health = healthChange;
+    void setHealth(float healthUpdate) {
+      m_stats.m_health = healthUpdate;
     }
 
 private:
