@@ -66,13 +66,12 @@ bool handleAttack(Character& Player, Character& Opponent)
             int plaDmg = plaAtk - Opponent.getDefense();
             curOppHP -= plaDmg;
             Opponent.setHealth(curOppHP);
-            std::cout << "A part of the attack has gone through. \n";
+            std::cout << "A part of your attack went through. \n";
             std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
             std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
         }
         else
-            std::cout << "No damage was exchanged \n";
-                
+            std::cout << "No damage was exchanged \n";     
     break;
     case 'S':
         std::cout << "opponent choice [S]kill. \n";
@@ -85,11 +84,10 @@ bool handleAttack(Character& Player, Character& Opponent)
         if (curOppHP > 0)
         {
         // opponet skill use
-        std::cout << "Your opponent has successfully cast their skill:"<< Opponent.getSkill() <<"\n";
+        std::cout << "Your opponent casts their skill:"<< Opponent.getSkill() <<"\n";
         }
         else
             break;
-
     break;
     default:
         return true;
@@ -99,22 +97,41 @@ bool handleAttack(Character& Player, Character& Opponent)
 
 bool handleBlock(Character& Player, Character& Opponent)
 {
+    int curPlaHP = Player.getHealth();
+    int curOppHP = Opponent.getHealth();
+    int plaAtk = Player.getAttack();
+    int oppAtk = Opponent.getAttack();
+    
     switch (getRandomAction())
     {
     case 'A':
-        /*
-        (opponent atk - player def) - player hp 
-        */
+        std::cout << "opponent choice [A]ttack \n";
+        // (opponent atk - player def) - player hp 
+        if (oppAtk > Player.getDefense())
+        {
+            int oppDmg = oppAtk - Player.getDefense();
+            curPlaHP -= oppDmg;
+            Player.setHealth(curPlaHP);
+            std::cout << "A part of their attack went through. \n";
+            std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
+            std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+        }
+        else
+            std::cout << "No damage was exchanged \n";
+
     break;
     case 'B':
-        /*
-        std::cout << "You idiots both blocked. Congrats nothing happens. \n"
-        */
+        std::cout << "opponent choice [B]lock \n";
+        std::cout << "You idiots both blocked. Congrats! Nothing happens. \n";
+        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
+        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
     break;
     case 'S':
-        /*
-        (player atk - opponent def) - opp hp 
-        */
+        std::cout << "opponent choice [S]kill. \n";
+        std::cout << "Your opponent casts their skill:"<< Opponent.getSkill() <<"\n";
+        std::cout << "You successfully block. \n";
+        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
+        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";        
     break;
     default:
         return true;
@@ -124,25 +141,48 @@ bool handleBlock(Character& Player, Character& Opponent)
 
 bool handleSkill(Character& Player, Character& Opponent)
     {
+    int curPlaHP = Player.getHealth();
+    int curOppHP = Opponent.getHealth();
+    int plaAtk = Player.getAttack();
+    int oppAtk = Opponent.getAttack();
+
     switch (getRandomAction())
     {
     case 'A':
-        /*
-        opponent atk*2 - player hp
-        player skill use
-        */
+        std::cout << "opponent choice [A]ttack \n";
+        // opponent atk*2 - player hp
+        // player skill use
+        curPlaHP -= oppAtk * 2;
+        Player.setHealth(curPlaHP);
+        std::cout << "You take double the damage.\n";
+        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
+        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+        if (curPlaHP > 0)
+        {
+        // opponet skill use
+        std::cout << "You cast your skill:"<< Player.getSkill() <<"\n";
+        }
+        else
+            break;        
     break;
     case 'B':
-        /*
-        opponent use block
-        player skill use
-        */
+        std::cout << "opponent choice [B]lock \n";
+        // opponent use block
+        // player skill use
+        std::cout << "You cast your skill:"<< Player.getSkill() <<"\n";
+        std::cout << "Your opponent successfully block. \n";
+        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
+        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n"; 
     break;
     case 'S':
-        /*
-        player skill use
-        opp skill use
-        */
+        std::cout << "opponent choice [S]kill. \n";
+        // player skill use
+        // opp skill use
+        std::cout << "You cast your skill:"<< Player.getSkill() <<"\n";
+        std::cout << "Your opponent casts their skill:"<< Opponent.getSkill() <<"\n";
+        std::cout << "The skills cancel eachother out! \n";
+        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
+        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";        
     break;
     default:
         return true;
@@ -161,9 +201,11 @@ char playerChoice(Character& Player, Character& Opponent)
         return 'A';
     }
     else if(choice == 'B' || choice == 'b'){
+        handleBlock(Player, Opponent);
         return 'B';
     }
     else if(choice == 'S' || choice == 's'){
+        handleSkill(Player, Opponent);
         return 'S';
     }
     else
@@ -203,7 +245,7 @@ void battle (Character& Player, Character& Opponent) //params - passed in
 
     while (Player.getHealth() > 0 && Opponent.getHealth() > 0)
     {
-       playerChoice(Player, Opponent);
+        playerChoice(Player, Opponent);
 
     // Checking to see the win/loss message
 
