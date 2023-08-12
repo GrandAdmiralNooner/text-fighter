@@ -23,9 +23,10 @@
 
 //break habits 
 
-char getRandomAction()
+char getRandomAction() // should be constants - at top of file
 {
-    int num = rand() % 99 + 1;
+    int num = rand() % 99;
+    std::cout << num << '\n';
     if (num <=65 )
     {
         return 'A';
@@ -37,7 +38,7 @@ char getRandomAction()
     else
         return 'S';
 }
-
+// write a test driver - automation
 bool handleAttack(Character& Player, Character& Opponent)
 {
     int curPlaHP = Player.getHealth();
@@ -113,7 +114,7 @@ bool handleBlock(Character& Player, Character& Opponent)
             curPlaHP -= oppDmg;
             Player.setHealth(curPlaHP);
             std::cout << "A part of their attack went through. \n";
-            std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
+            std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n"; // do a math ceiling. figure it out. give me the larger of two
             std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
         }
         else

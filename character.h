@@ -11,6 +11,12 @@ struct Statblock {
 	float m_health{};
   float m_attack{};
 	float m_defense{};
+
+  bool operator==(const Statblock& Other) {
+    return (m_health == Other.m_health && 
+      m_attack == Other.m_attack && 
+      m_defense == Other.m_defense); //write the boiler plate
+  }
 };
 
 class Character {
@@ -24,6 +30,12 @@ public:
     return os;
   }
   
+  bool operator==(const Character& Other) {
+    return m_name == Other.m_name && 
+    m_stats == Other.m_stats && 
+    m_skill == Other.m_skill;
+  }
+
     void printStats() const {
       std::cout << "Health: " << m_stats.m_health << "\n";
       std::cout << "Attack: " << m_stats.m_attack << "\n";

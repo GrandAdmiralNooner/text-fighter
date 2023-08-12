@@ -7,6 +7,14 @@ struct Skillblock {
   
   Skillblock() : Skillblock(0, 0, 0, 0){} // Delegating constructor
   
+    bool operator==(const Skillblock& Other)
+    {
+        return m_cooldown == Other.m_cooldown && 
+        m_add_attack == Other.m_add_attack && 
+        m_add_defense == Other.m_add_defense && 
+        m_add_health == Other.m_add_health;
+    }
+
   float m_cooldown{};
   float m_add_attack{};
   float m_add_defense{};
@@ -23,6 +31,10 @@ public:
 friend std::ostream& operator <<(std::ostream& os, const Skill& skills) {
     os << skills.m_sname;
     return os;
+}
+bool operator==(const Skill& Other)
+{
+    return m_sname == Other.m_sname && m_skills == Other.m_skills;
 }
 
 void printStats() const {
