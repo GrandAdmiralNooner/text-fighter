@@ -1,10 +1,3 @@
-// welcome
-// choose 1 of 4 classes - fighter, cleric, ranger, sorc
-// choose 1 of 4 opponent - same
-// no mirror matches
-// choose to fight, or choose to runaway - program end
-// ---
-
 #include <iostream>
 #include "getCharacter.h"
 #include "mirrorMatch.h"

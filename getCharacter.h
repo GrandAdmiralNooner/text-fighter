@@ -1,11 +1,3 @@
-// welcome
-// choose 1 of 4 classes - fighter, cleric, ranger, sorc
-// choose 1 of 4 opponent - same
-// no mirror matches
-// choose to fight, or choose to runaway - program end
-// ---
-// fight - battle system
-// ran away - program would end
 // battle system 
 //     - attack
 //     - block

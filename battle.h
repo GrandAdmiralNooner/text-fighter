@@ -1,16 +1,3 @@
-// If they choose [F]ight - enter the battleMenu
-    // option 1 is to attack
-        // attack stat subtracts from the hp stat
-    // option 2 is to block
-        // check if block stat is higher than attack stat
-        // if block >= attack then no damage
-        // if block < attack then subtract different from hp stat
-    // option 3 is to use a skill
-        // depends on class chosen
-        // skill adds to hp, atk, or def
-// if they choose [R]un away - the program ends
-// if they pick another key, it loops back to the [F] or [R] option
-
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -22,6 +9,11 @@
 //new assignment read functions and returns more
 
 //break habits 
+
+void printHealth(int curOppHP, int curPlaHP) {
+    std::cout << "Your opponent's HP is: " << (curOppHP > 0 ? curOppHP : 0) << "\n";
+    std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+}
 
 char getRandomAction() // should be constants - at top of file
 {
@@ -56,8 +48,9 @@ bool handleAttack(Character& Player, Character& Opponent)
         // player hp - opponent attack
         curPlaHP -= oppAtk;
         Player.setHealth(curPlaHP);
-        std::cout << "You strike your opponent first. Your opponent's HP is: "<<  (curOppHP > 0 ? curOppHP : 0) << "\n";
-        std::cout << "Your opponent strikes you back. Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+        std::cout << "You strike your opponent first.\n";
+        std::cout << "Your opponent strikes you back. \n";
+        printHealth(curOppHP, curPlaHP);
     break;
     case 'B':
         std::cout << "opponent choice [B]lock \n";
@@ -68,8 +61,7 @@ bool handleAttack(Character& Player, Character& Opponent)
             curOppHP -= plaDmg;
             Opponent.setHealth(curOppHP);
             std::cout << "A part of your attack went through. \n";
-            std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
-            std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+            printHealth(curOppHP, curPlaHP);
         }
         else
             std::cout << "No damage was exchanged \n";     
@@ -80,8 +72,7 @@ bool handleAttack(Character& Player, Character& Opponent)
         curOppHP -= plaAtk * 2;
         Opponent.setHealth(curOppHP);
         std::cout << "You deal double the damage.\n";
-        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
-        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+        printHealth(curOppHP, curPlaHP);
         if (curOppHP > 0)
         {
         // opponet skill use
@@ -114,8 +105,7 @@ bool handleBlock(Character& Player, Character& Opponent)
             curPlaHP -= oppDmg;
             Player.setHealth(curPlaHP);
             std::cout << "A part of their attack went through. \n";
-            std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n"; // do a math ceiling. figure it out. give me the larger of two
-            std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+            printHealth(curOppHP, curPlaHP);
         }
         else
             std::cout << "No damage was exchanged \n";
@@ -124,15 +114,13 @@ bool handleBlock(Character& Player, Character& Opponent)
     case 'B':
         std::cout << "opponent choice [B]lock \n";
         std::cout << "You idiots both blocked. Congrats! Nothing happens. \n";
-        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
-        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+        printHealth(curOppHP, curPlaHP);
     break;
     case 'S':
         std::cout << "opponent choice [S]kill. \n";
         std::cout << "Your opponent casts their skill:"<< Opponent.getSkill() <<"\n";
         std::cout << "You successfully block. \n";
-        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
-        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";        
+        printHealth(curOppHP, curPlaHP);      
     break;
     default:
         return true;
@@ -156,8 +144,7 @@ bool handleSkill(Character& Player, Character& Opponent)
         curPlaHP -= oppAtk * 2;
         Player.setHealth(curPlaHP);
         std::cout << "You take double the damage.\n";
-        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
-        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+        printHealth(curOppHP, curPlaHP);
         if (curPlaHP > 0)
         {
         // opponet skill use
@@ -171,9 +158,8 @@ bool handleSkill(Character& Player, Character& Opponent)
         // opponent use block
         // player skill use
         std::cout << "You cast your skill:"<< Player.getSkill() <<"\n";
-        std::cout << "Your opponent successfully block. \n";
-        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
-        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n"; 
+        std::cout << "Your opponent successfully blocks. \n";
+        printHealth(curOppHP, curPlaHP);
     break;
     case 'S':
         std::cout << "opponent choice [S]kill. \n";
@@ -181,9 +167,8 @@ bool handleSkill(Character& Player, Character& Opponent)
         // opp skill use
         std::cout << "You cast your skill:"<< Player.getSkill() <<"\n";
         std::cout << "Your opponent casts their skill:"<< Opponent.getSkill() <<"\n";
-        std::cout << "The skills cancel eachother out! \n";
-        std::cout << "Your opponent's HP is: "<< (curOppHP > 0 ? curOppHP : 0) << "\n";
-        std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";        
+        std::cout << "The skills cancel each other out! \n";
+        printHealth(curOppHP, curPlaHP);       
     break;
     default:
         return true;
@@ -233,6 +218,7 @@ void battle (Character& Player, Character& Opponent) //params - passed in
         case 'R':
         case 'r':
             std::cout << "You ran away. Good call. \n";
+            Opponent.setHealth(0);
             inBattle = false;
         break;
         default:
