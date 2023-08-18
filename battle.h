@@ -21,24 +21,27 @@ constexpr const char* NO_DAMAGE_MESSAGE = "No damage was exchanged. \n";
 constexpr const char* PLAYER_SKILL_MESSAGE = "You cast your skill: ";
 constexpr const char* OPPONENT_SKILL_MESSAGE = "Your opponent casts their skill: ";
 
+constexpr int OPPONENT_ATTACK_CHANCE = 65;
+constexpr int OPPONENT_BLOCK_CHANCE = 90;
+
 void printHealth(int currentOpponentHP, int currentPlayerHP) {
     std::cout << "Your opponent's HP is: " << std::max(currentOpponentHP, 0) << "\n";
     std::cout << "Your HP is: " << std::max(currentPlayerHP, 0) << "\n";
 }
-
+// convert from magic numbers to constexpr
 char getRandomAction() // should be constants - at top of file
 {
     int num = rand() % 99;
     // std::cout << num << '\n';
-    if (num <=65 )
+    if (num <= OPPONENT_ATTACK_CHANCE)
     {
         return 'A';
     }
-    else if (num >=66 && num <= 90)
+    else if (num <= OPPONENT_BLOCK_CHANCE)
     {
         return 'B';
     }
-    else
+    else // anything above 90 will execute the Opponent's Skill
         return 'S';
 }
 // write a test driver - automation

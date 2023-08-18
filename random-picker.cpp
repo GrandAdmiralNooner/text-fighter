@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <cstdio>
 
 // g++ random-picker.cpp -o ran-pick.exe
 
@@ -27,11 +28,9 @@ int main()
 {
     // Seed the random number generator with the current time
     srand(time(nullptr));
-    int index = 0;
-    for (int i = 0; i < 12; ++i) {
+    for (int i = 12; i >= 1; i--) {
         std::string action = getRandomAction();
-        index +=1;
-        std::cout << index << ". " << action << ".\n";
+        // std::cout << i << ". " << action << ".\n";
+        printf("Pick #%d: Owner: %s.\n", i, action.c_str());
     }
-    return 0;
 }
