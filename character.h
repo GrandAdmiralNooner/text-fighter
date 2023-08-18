@@ -59,11 +59,11 @@ public:
     return m_stats.m_health;
     }
 
-    float getAttack() const {
+    float& getAttack() {
     return m_stats.m_attack;
     }
 
-    float getDefense() const {
+    float& getDefense() {
     return m_stats.m_defense;
     }
 

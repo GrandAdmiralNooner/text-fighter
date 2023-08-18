@@ -8,17 +8,28 @@
 
 //new assignment read functions and returns more
 
-//break habits 
+//break habits
+//Reminder: character - name, [skill], hp, attack, defense
+//Reminder: skills - name, cd, add attack, add defense, add health
 
-void printHealth(int curOppHP, int curPlaHP) {
-    std::cout << "Your opponent's HP is: " << (curOppHP > 0 ? curOppHP : 0) << "\n";
-    std::cout << "Your HP is: " << (curPlaHP > 0 ? curPlaHP : 0) << "\n";
+constexpr const char* RANDOM_CHOICE_A_MESSAGE = "Your Opponent chooses to [ATTACK]! \n";
+constexpr const char* RANDOM_CHOICE_B_MESSAGE = "Your Opponent chooses to [BLOCK]! \n";
+constexpr const char* RANDOM_CHOICE_S_MESSAGE = "Your Opponent uses a [SKILL]! \n";
+constexpr const char* PLAYER_HIT_FIRST_MESSAGE = "You strike first! \n";
+constexpr const char* OPPONENT_RETALIATION_MESSAGE = "Your opponent strikes you back! \n";
+constexpr const char* NO_DAMAGE_MESSAGE = "No damage was exchanged. \n";
+constexpr const char* PLAYER_SKILL_MESSAGE = "You cast your skill: ";
+constexpr const char* OPPONENT_SKILL_MESSAGE = "Your opponent casts their skill: ";
+
+void printHealth(int currentOpponentHP, int currentPlayerHP) {
+    std::cout << "Your opponent's HP is: " << std::max(currentOpponentHP, 0) << "\n";
+    std::cout << "Your HP is: " << std::max(currentPlayerHP, 0) << "\n";
 }
 
 char getRandomAction() // should be constants - at top of file
 {
     int num = rand() % 99;
-    std::cout << num << '\n';
+    // std::cout << num << '\n';
     if (num <=65 )
     {
         return 'A';
@@ -33,50 +44,50 @@ char getRandomAction() // should be constants - at top of file
 // write a test driver - automation
 bool handleAttack(Character& Player, Character& Opponent)
 {
-    int curPlaHP = Player.getHealth();
-    int curOppHP = Opponent.getHealth();
-    int plaAtk = Player.getAttack();
-    int oppAtk = Opponent.getAttack();
+    int currentPlayerHP = Player.getHealth();
+    int currentOpponentHP = Opponent.getHealth();
+    int playerAttack = Player.getAttack();
+    int opponentAttack = Opponent.getAttack();
 
     switch (getRandomAction())
     {
     case 'A':
-        std::cout << "opponent choice [A]ttack \n";
+        std::cout << RANDOM_CHOICE_A_MESSAGE;
         // opponent hp - player attack
-        curOppHP -= plaAtk;
-        Opponent.setHealth(curOppHP);
+        currentOpponentHP -= playerAttack;
+        Opponent.setHealth(currentOpponentHP);
         // player hp - opponent attack
-        curPlaHP -= oppAtk;
-        Player.setHealth(curPlaHP);
-        std::cout << "You strike your opponent first.\n";
-        std::cout << "Your opponent strikes you back. \n";
-        printHealth(curOppHP, curPlaHP);
+        currentPlayerHP -= opponentAttack;
+        Player.setHealth(currentPlayerHP);
+        std::cout << PLAYER_HIT_FIRST_MESSAGE;
+        std::cout << OPPONENT_RETALIATION_MESSAGE;
+        printHealth(currentOpponentHP, currentPlayerHP);
     break;
     case 'B':
-        std::cout << "opponent choice [B]lock \n";
+        std::cout << RANDOM_CHOICE_B_MESSAGE;
         // opphp - (player atk - opponent def)
-        if (plaAtk > Opponent.getDefense())
+        if (playerAttack > Opponent.getDefense())
         {
-            int plaDmg = plaAtk - Opponent.getDefense();
-            curOppHP -= plaDmg;
-            Opponent.setHealth(curOppHP);
+            int plaDmg = playerAttack - Opponent.getDefense();
+            currentOpponentHP -= plaDmg;
+            Opponent.setHealth(currentOpponentHP);
             std::cout << "A part of your attack went through. \n";
-            printHealth(curOppHP, curPlaHP);
+            printHealth(currentOpponentHP, currentPlayerHP);
         }
         else
-            std::cout << "No damage was exchanged \n";     
+            std::cout << NO_DAMAGE_MESSAGE;     
     break;
     case 'S':
-        std::cout << "opponent choice [S]kill. \n";
+        std::cout << RANDOM_CHOICE_S_MESSAGE;
         // player atk*2 - opponent hp
-        curOppHP -= plaAtk * 2;
-        Opponent.setHealth(curOppHP);
+        currentOpponentHP -= playerAttack * 2;
+        Opponent.setHealth(currentOpponentHP);
         std::cout << "You deal double the damage.\n";
-        printHealth(curOppHP, curPlaHP);
-        if (curOppHP > 0)
+        printHealth(currentOpponentHP, currentPlayerHP);
+        if (currentOpponentHP > 0)
         {
         // opponet skill use
-        std::cout << "Your opponent casts their skill:"<< Opponent.getSkill() <<"\n";
+        std::cout << OPPONENT_SKILL_MESSAGE << Opponent.getSkill() <<"\n";
         }
         else
             break;
@@ -89,38 +100,38 @@ bool handleAttack(Character& Player, Character& Opponent)
 
 bool handleBlock(Character& Player, Character& Opponent)
 {
-    int curPlaHP = Player.getHealth();
-    int curOppHP = Opponent.getHealth();
-    int plaAtk = Player.getAttack();
-    int oppAtk = Opponent.getAttack();
+    int currentPlayerHP = Player.getHealth();
+    int currentOpponentHP = Opponent.getHealth();
+    int playerAttack = Player.getAttack();
+    int opponentAttack = Opponent.getAttack();
     
     switch (getRandomAction())
     {
     case 'A':
-        std::cout << "opponent choice [A]ttack \n";
+        std::cout << RANDOM_CHOICE_A_MESSAGE;
         // (opponent atk - player def) - player hp 
-        if (oppAtk > Player.getDefense())
+        if (opponentAttack > Player.getDefense())
         {
-            int oppDmg = oppAtk - Player.getDefense();
-            curPlaHP -= oppDmg;
-            Player.setHealth(curPlaHP);
+            int oppDmg = opponentAttack - Player.getDefense();
+            currentPlayerHP -= oppDmg;
+            Player.setHealth(currentPlayerHP);
             std::cout << "A part of their attack went through. \n";
-            printHealth(curOppHP, curPlaHP);
+            printHealth(currentOpponentHP, currentPlayerHP);
         }
         else
-            std::cout << "No damage was exchanged \n";
+            std::cout << NO_DAMAGE_MESSAGE;
 
     break;
     case 'B':
-        std::cout << "opponent choice [B]lock \n";
+        std::cout << RANDOM_CHOICE_B_MESSAGE;
         std::cout << "You idiots both blocked. Congrats! Nothing happens. \n";
-        printHealth(curOppHP, curPlaHP);
+        printHealth(currentOpponentHP, currentPlayerHP);
     break;
     case 'S':
-        std::cout << "opponent choice [S]kill. \n";
-        std::cout << "Your opponent casts their skill:"<< Opponent.getSkill() <<"\n";
+        std::cout << RANDOM_CHOICE_S_MESSAGE;
+        std::cout << OPPONENT_SKILL_MESSAGE << Opponent.getSkill() <<"\n";
         std::cout << "You successfully block. \n";
-        printHealth(curOppHP, curPlaHP);      
+        printHealth(currentOpponentHP, currentPlayerHP);      
     break;
     default:
         return true;
@@ -130,45 +141,45 @@ bool handleBlock(Character& Player, Character& Opponent)
 
 bool handleSkill(Character& Player, Character& Opponent)
     {
-    int curPlaHP = Player.getHealth();
-    int curOppHP = Opponent.getHealth();
-    int plaAtk = Player.getAttack();
-    int oppAtk = Opponent.getAttack();
+    int currentPlayerHP = Player.getHealth();
+    int currentOpponentHP = Opponent.getHealth();
+    int playerAttack = Player.getAttack();
+    int opponentAttack = Opponent.getAttack();
 
     switch (getRandomAction())
     {
     case 'A':
-        std::cout << "opponent choice [A]ttack \n";
+        std::cout << RANDOM_CHOICE_A_MESSAGE;
         // opponent atk*2 - player hp
         // player skill use
-        curPlaHP -= oppAtk * 2;
-        Player.setHealth(curPlaHP);
+        currentPlayerHP -= opponentAttack * 2;
+        Player.setHealth(currentPlayerHP);
         std::cout << "You take double the damage.\n";
-        printHealth(curOppHP, curPlaHP);
-        if (curPlaHP > 0)
+        printHealth(currentOpponentHP, currentPlayerHP);
+        if (currentPlayerHP > 0)
         {
-        // opponet skill use
-        std::cout << "You cast your skill:"<< Player.getSkill() <<"\n";
+        // player skill use
+        std::cout << PLAYER_SKILL_MESSAGE << Player.getSkill() <<"\n";
         }
         else
             break;        
     break;
     case 'B':
-        std::cout << "opponent choice [B]lock \n";
+        std::cout << RANDOM_CHOICE_B_MESSAGE;
         // opponent use block
         // player skill use
-        std::cout << "You cast your skill:"<< Player.getSkill() <<"\n";
+        std::cout << PLAYER_SKILL_MESSAGE<< Player.getSkill() <<"\n";
         std::cout << "Your opponent successfully blocks. \n";
-        printHealth(curOppHP, curPlaHP);
+        printHealth(currentOpponentHP, currentPlayerHP);
     break;
     case 'S':
-        std::cout << "opponent choice [S]kill. \n";
+        std::cout << RANDOM_CHOICE_S_MESSAGE;
         // player skill use
         // opp skill use
-        std::cout << "You cast your skill:"<< Player.getSkill() <<"\n";
-        std::cout << "Your opponent casts their skill:"<< Opponent.getSkill() <<"\n";
+        std::cout << PLAYER_SKILL_MESSAGE<< Player.getSkill() <<"\n";
+        std::cout << OPPONENT_SKILL_MESSAGE << Opponent.getSkill() <<"\n";
         std::cout << "The skills cancel each other out! \n";
-        printHealth(curOppHP, curPlaHP);       
+        printHealth(currentOpponentHP, currentPlayerHP);       
     break;
     default:
         return true;

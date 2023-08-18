@@ -19,14 +19,16 @@ void chooseOpponent() {
   std::cout << "You will be choosing your opponent. \n";
 }
 
+//Reminder: skills - name, cd, add attack, add defense, add health
+
 Character getCharacter() {
   using namespace std;
   static vector<Character> Characters
   {
-    {"Fighter", {"Two-Weapon", 4, 6, 0, 0}, 50, 8, 6}, // static - this is known
-    {"Ranger", {"Breaker", 4, 4, 0, 0}, 50, 7, 5},
-    {"Cleric", {"Intervention", 4, 4, 2, 12}, 50, 4, 6},
-    {"Sorcerer", {"Fireball", 4, 12, 0, 0}, 50, 6, 4}
+    {"Fighter", {"Two-Weapon", 2, 4, 0, 0}, 50, 8, 6},
+    {"Ranger", {"Breaker", 2, 5, 0, 0}, 50, 7, 5},
+    {"Cleric", {"Intervention", 2, 4, 2, 12}, 50, 4, 6},
+    {"Sorcerer", {"Fireball", 3, 12, 0, 0}, 50, 6, 4}
   };
 
     std::cout << "Which class interests you most? \n"; // seperation of concerns. pick smallest scope first
